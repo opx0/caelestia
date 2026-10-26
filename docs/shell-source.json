@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/caelestia-dots/shell.git",
+  "tag": "v2.5.0",
+  "commit": "d999d4878ee4cec134168e60d913714566a8cfa6",
+  "method": "git archive; unmodified source snapshot",
+  "native_modules": "Uses package-installed Caelestia QML modules until a local native build is needed."
+}

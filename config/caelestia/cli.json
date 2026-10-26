@@ -1,0 +1,7 @@
+{
+    "theme": {
+        "enableGtk": true,
+        "enableQt": true,
+        "postHook": "python3 /home/opx/.config/caelestia/hooks/sync-dolphin.py"
+    }
+}

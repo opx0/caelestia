@@ -1,3 +1,21 @@
+# Caelestia desktop development
+
+Personal desktop workspace for `git@github.com:opx0/caelestia.git`.
+The existing upstream app-dotfile layout is preserved. Custom shell development
+lives in `shell/`, based on Caelestia shell v2.5.0.
+
+- [Desktop setup and commands](docs/desktop-setup.md)
+- [Installation audit](docs/installation-audit.md)
+- [Shell source provenance](docs/shell-source.json)
+- [Upstream shell instructions](shell/README.md)
+
+```sh
+python scripts/desktop.py status
+python scripts/desktop.py check
+```
+
+## Upstream dotfile documentation
+
 # caelestia
 
 This is the main repo of the Caelestia dotfiles and contains user configs for

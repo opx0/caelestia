@@ -11,3 +11,10 @@
 /fish/conf.d/
 
 .SRCINFO
+
+# Local desktop development
+__pycache__/
+*.pyc
+/build/
+/.local/
+.env
