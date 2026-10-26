@@ -111,7 +111,10 @@ system to the remaining panels.
 ## Setup verification
 
 - Personal files linked after backing up originals; content preserved.
-- JSON parsing and Git whitespace checks passed.
+- JSON parsing passed. The initial import has inherited whitespace warnings in
+  the unchanged shell snapshot and copied Hyprland override. These were retained
+  to preserve source and live configuration content. New setup code passed the
+  whitespace check.
 - Temporary-directory checks passed for deployment, repeated deployment,
   restoration, repeated restoration, absent paths and edited-file protection.
 - Imported QML matches installed v2.5.0 QML except `shell.qml` file watching,
