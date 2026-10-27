@@ -10,8 +10,9 @@ lives in `shell/`, based on Caelestia shell v2.5.0.
 - [Upstream shell instructions](shell/README.md)
 
 ```sh
+./apply --dry-run
+./apply
 python scripts/desktop.py status
-python scripts/desktop.py check
 ```
 
 ## Upstream dotfile documentation

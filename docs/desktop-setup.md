@@ -1,122 +1,103 @@
-# Desktop setup
+# Applying desktop changes
 
-## Repository layout
-
-Keep the name Caelestia and the existing `opx0/caelestia` origin.
-
-| Path | Responsibility |
-| --- | --- |
-| Existing root app directories and manifest | Upstream dotfile defaults |
-| `shell/` | Editable shell QML, services, assets and native plugin source |
-| `config/caelestia/` | Personal overrides and existing theme hook |
-| `scripts/desktop.py` | Local deployment, backups and shell selection |
-| `docs/` | Installation map, source version and development instructions |
-
-The shell is an ordinary tracked source snapshot, including its original license.
-It needs no submodule initialization or separate fork. Its tag and commit are
-recorded in `shell-source.json`. The `shell-upstream` Git remote is for inspecting
-future upstream changes. Review and import those changes into the `shell/` prefix;
-do not merge that remote directly into the dotfiles repository root.
-The `upstream` remote tracks the original app dotfiles.
-
-## Daily commands
-
-Run these from the repository root:
+Edit this checkout, then run:
 
 ```sh
+./apply
+```
+
+The command takes a snapshot of the working files under
+`~/.local/state/caelestia/deployments/<content-hash>/`, copies enabled app
+configurations and personal overrides into their actual destinations, points
+`~/.config/quickshell/caelestia` at the snapshot's shell, and reloads Hyprland
+and Caelestia. You do not need to commit or push before applying local edits.
+Git push only uploads source to GitHub.
+
+## What goes where
+
+| Repository source | Live destination |
+| --- | --- |
+| `config/caelestia/` | `~/.config/caelestia/`, regular copied files |
+| `hypr/` | `~/.config/hypr/` |
+| Enabled app entries in `manifest.toml` | Their declared `.config` or other destinations |
+| `shell/` | State snapshot, linked from `~/.config/quickshell/caelestia` |
+
+Enabled app components come from the existing
+`~/.local/state/caelestia/dots-state.json`. Only Git-tracked or unignored source
+files under those entries are included. Files excluded by `.gitignore`, such as
+current generated colors and application history, are not deployed. Wildcard
+Firefox entries are skipped when no matching profile exists. Manifest package
+installation and arbitrary post-install hooks are not run by this command.
+Apps other than Hyprland and the shell may need reopening to read their configs.
+
+The original `~/.local/state/caelestia/dots` checkout remains owned by the
+upstream CLI. Applied snapshots live beside it, so the CLI cannot reset your
+development checkout. Package-owned files in `/etc` and `/usr` are untouched.
+Personal settings are copied now; the earlier direct repository symlinks have
+been replaced. Editing a live `.config` file does not edit your repository.
+
+## Review and recovery
+
+```sh
+./apply --dry-run
 python scripts/desktop.py status
 python scripts/desktop.py check
-python scripts/desktop.py deploy
+python -m unittest discover -s tests -q
 ```
 
-`deploy` creates one symlink per personal configuration file. Existing files are
-moved to a timestamped backup under
-`${XDG_STATE_HOME:-~/.local/state}/caelestia-management/backups/`.
-Repeated deployment skips paths already linked to this checkout.
-Editing a linked file from the desktop also changes its tracked source here.
-Review Git changes before committing.
+A repeated apply with identical files creates no additional backup. Changing
+source files creates a new snapshot. Existing destinations that need replacing
+are saved under `~/.local/state/caelestia-management/backups/<timestamp>/`.
+On a deployment error, rejected Hyprland config or failed shell startup, the
+command attempts to restore those paths and restart the previous shell.
+Startup verification checks a running instance and working shell IPC; inspect
+visual behavior too.
 
-The current configuration preserves machine-specific paths and bindings from
-this installation. The Dolphin suite and terminal/editor configuration remain
-in their existing locations; they have not been migrated into this repository.
-The tracked Dolphin color hook has no dependency on the suite directory.
-Do not copy Dolphin history, user places, generated color schemes or app state
-into Git. Audit those integrations individually when changing them.
-
-## Switching the shell
-
-The initial setup leaves the packaged shell running. When ready to develop:
+To restore a specific backup, use its printed absolute directory:
 
 ```sh
-python scripts/desktop.py use-dev
+python scripts/desktop.py restore /absolute/path/to/backup
+hyprctl reload
+caelestia shell -r
 ```
 
-This stops the current Caelestia instance, backs up the current user shell path,
-links `~/.config/quickshell/caelestia` to this checkout's `shell/`, and launches it
-through the existing CLI. Existing keybindings still use the name `caelestia`.
-The development source enables file watching, so QML edits reload the UI.
-This command changes the live desktop and persists across logins.
-
-Return to the installed shell:
+Restore backups in reverse order. Restoration refuses to overwrite a copied
+file edited since applying, so preserve or reconcile those changes first.
+To switch only the UI back to the packaged shell:
 
 ```sh
 python scripts/desktop.py use-packaged
 ```
 
-Keep that command available in a terminal while experimenting. If the custom
-shell fails to launch, run it to recover. Activation currently checks the process
-command result; it does not establish that every panel rendered correctly.
+`./apply --no-reload` deploys without restarting anything and is intended for
+staging checks. Reload manually afterward. Removing source files does not
+currently prune their previously deployed destinations. Backups and snapshots
+are retained until you deliberately remove them.
 
-The matching package-installed native QML modules are used initially. C++ changes
-under `shell/plugin/`, or updating the system shell package to a different version,
-require checking module compatibility and preparing a local native build before
-using the development shell. The upstream build instructions install system files;
-do not run those installation commands blindly. Local native build isolation is
-future work when native changes become necessary.
+## Native modules and upstream updates
 
-## Restoring personal configuration
+The source snapshot is based on shell v2.5.0; provenance is recorded in
+`shell-source.json`, and its original license is retained. The command requires
+the matching installed `caelestia-shell` version and uses its compiled native
+modules. QML/UI edits are deployed by apply. C++ edits require a separate native
+build and cannot be activated by copying files alone.
 
-Use the exact backup directory printed by deployment:
+`upstream` is the original app-dotfiles remote. `shell-upstream` is for reviewing
+shell updates, which must be imported under `shell/`, not merged into the root.
+The CLI still uses its existing upstream source. `caelestia update` includes a
+system/package upgrade and may update deployed app defaults. Reapply this
+checkout afterward; if the shell package version changed, reconcile the shell
+source and native modules first.
 
-```sh
-python scripts/desktop.py restore /absolute/path/to/backup
-```
+## Current local changes
 
-Restore in reverse chronological order when undoing several deployments. The
-command refuses to overwrite a destination replaced with an unrelated file.
-Restoring a shell-path backup changes the path only; use `use-packaged` for a live
-switch with a restart.
+- Workspace swiping uses three fingers horizontally.
+- Window gaps are 3 pixels inside and 4 pixels outside, including a single window.
+- Shell frame thickness is 4 pixels.
+- Overrides remain in `config/caelestia/hypr-vars.lua` and `shell.json`.
 
-## Updates and ownership
-
-Do not edit the updater cache at `~/.local/state/caelestia/dots`.
-Do not edit package-owned shell files under `/etc` or `/usr`.
-Do not let both the CLI manifest and this script deploy the personal override paths.
-The upstream manifest currently does not deploy those paths.
-
-The CLI dotfile source still points to upstream. The custom UI and personal
-overrides are now managed by this repository independently. Selecting this fork
-as the CLI deployment source is a separate change when root defaults are modified;
-it is not needed for shell development. `caelestia update` also updates packages.
-
-## Next UI work
-
-Start with the horizontal top bar. Update bar layout, edge reservations, frame
-geometry, workspace/title/clock orientation, hover hit areas and popup placement
-together. Verify launcher, dashboard, tray, quick controls, notifications,
-workspace switching, fullscreen and every connected display before making it
-the normal desktop. Then apply a shared spacing, typography, color and motion
-system to the remaining panels.
-
-## Setup verification
-
-- Personal files linked after backing up originals; content preserved.
-- JSON parsing passed. The initial import has inherited whitespace warnings in
-  the unchanged shell snapshot and copied Hyprland override. These were retained
-  to preserve source and live configuration content. New setup code passed the
-  whitespace check.
-- Temporary-directory checks passed for deployment, repeated deployment,
-  restoration, repeated restoration, absent paths and edited-file protection.
-- Imported QML matches installed v2.5.0 QML except `shell.qml` file watching,
-  which is intentionally enabled for development.
-- Development-shell activation and rendering have not been tested yet.
+Deployment/restore behavior is covered by temporary-directory tests. The initial
+live apply passed Hyprland config validation and shell IPC checks. Physical
+trackpad gestures still need manual testing. Existing Dolphin suite files and
+terminal/editor configs stay in their original locations. Runtime history,
+wallpapers and generated theme data are not imported into this repository.
