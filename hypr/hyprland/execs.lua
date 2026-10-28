@@ -25,6 +25,9 @@ hl.on("hyprland.start", function()
     -- Forward bluetooth media commands to MPRIS
     hl.exec_cmd("mpris-proxy")
 
+    -- Sync Qt / Dolphin theming & auto-rebuild if Qt was updated
+    hl.exec_cmd("python3 ~/.config/caelestia/hooks/sync-dolphin.py")
+
     -- Start shell
     hl.exec_cmd("caelestia shell -d")
 end)

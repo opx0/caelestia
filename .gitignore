@@ -18,3 +18,10 @@ __pycache__/
 /build/
 /.local/
 .env
+
+# AI agent harness artifacts
+/skills/
+.agents/
+.gemini/
+.claude/
+.codex/

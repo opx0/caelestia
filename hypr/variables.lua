@@ -6,10 +6,10 @@ return {
     ------------------
 
     -- Apps
-    terminal                   = "foot",
-    browser                    = "firefox",
-    editor                     = "codium",
-    fileExplorer               = "thunar",
+    terminal                   = "kitty",
+    browser                    = "zen-browser",
+    editor                     = "code",
+    fileExplorer               = "dolphin",
     audioSettings              = "pwvucontrol",
 
     -- Touchpad
@@ -35,16 +35,16 @@ return {
     shadowColour               = "rgba(" .. scheme.inversePrimary .. "10)",
 
     -- Gaps
-    workspaceGaps              = 20,
-    windowGapsIn               = 5,
-    windowGapsOut              = 10,
-    singleWindowGapsOut        = 20,
+    workspaceGaps              = 5,
+    windowGapsIn               = 2,
+    windowGapsOut              = 1,
+    singleWindowGapsOut        = 5,
 
     -- Window styling
-    windowOpacity              = 0.95,
-    windowRounding             = 15,
+    windowOpacity              = 0.98,
+    windowRounding             = 18,
     windowRoundingPower        = 2,
-    windowBorderSize           = 1,
+    windowBorderSize           = 2,
     activeWindowBorderColour   = "rgba(" .. scheme.primary .. "e6)",
     inactiveWindowBorderColour = "rgba(" .. scheme.onSurfaceVariant .. "11)",
 
@@ -114,6 +114,7 @@ return {
 
     -- Apps
     kbTerminal                 = "SUPER + T",
+    kbGhostty                  = "SUPER + RETURN",
     kbBrowser                  = "SUPER + W",
     kbEditor                   = "SUPER + C",
     kbFileExplorer             = "SUPER + E",

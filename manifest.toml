@@ -110,7 +110,20 @@ packages = [
     "darkly-bin",
     "papirus-icon-theme",
     "papirus-folders",
+    "extra-cmake-modules",
+    "ninja",
+    "cmake",
 ]
+post_install = ["python3 ${XDG_CONFIG_HOME:-$HOME/.config}/caelestia/hooks/sync-dolphin.py"]
+[[components.entries]]
+src = "environment.d/10-qt.conf"
+dest = "$XDG_CONFIG_HOME/environment.d/10-qt.conf"
+[[components.entries]]
+src = "darklyrc"
+dest = "$XDG_CONFIG_HOME/darklyrc"
+[[components.entries]]
+src = "color-schemes/CatppuccinMochaLavender.colors"
+dest = "$XDG_DATA_HOME/color-schemes/CatppuccinMochaLavender.colors"
 
 [[components]]
 name = "auth"

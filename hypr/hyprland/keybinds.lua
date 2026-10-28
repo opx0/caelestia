@@ -158,7 +158,9 @@ create_bind(vars.kbCommunicationWs, fn.toggle("communication"))
 create_bind(vars.kbTodoWs, fn.toggle("todo"))
 
 -- Apps
+create_bind("SUPER + ALT + G", hl.dsp.exec_cmd("sh ~/.config/hypr/toggle-transparency.sh"))
 create_bind(vars.kbTerminal, hl.dsp.exec_cmd(vars.terminal))
+create_bind(vars.kbGhostty, hl.dsp.exec_cmd("ghostty"))
 create_bind(vars.kbBrowser, hl.dsp.exec_cmd(vars.browser))
 create_bind(vars.kbEditor, hl.dsp.exec_cmd(vars.editor))
 create_bind(vars.kbFileExplorer, hl.dsp.exec_cmd(vars.fileExplorer))

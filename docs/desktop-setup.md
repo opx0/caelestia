@@ -101,3 +101,24 @@ live apply passed Hyprland config validation and shell IPC checks. Physical
 trackpad gestures still need manual testing. Existing Dolphin suite files and
 terminal/editor configs stay in their original locations. Runtime history,
 wallpapers and generated theme data are not imported into this repository.
+
+## Horizontal bar
+
+The shell includes the changes from upstream pull request
+https://github.com/caelestia-dots/shell/pull/2076 (head
+`6e75968241e8a47f65fad5c93ac88b180489b991`). Set `bar.position` in
+`config/caelestia/shell.json` to `top`, `bottom`, `left`, or `right`, then
+run `./apply`.
+
+This change requires custom native QML modules. They are installed under
+`~/.local/share/caelestia-horizontal`, and `shell/shell.qml` points to that
+location. To rebuild them after editing native code or updating Qt, run:
+
+```sh
+cmake -S shell -B /tmp/caelestia-horizontal-build -G Ninja -DVERSION=2.5.0 -DCMAKE_BUILD_TYPE=Release
+cmake --build /tmp/caelestia-horizontal-build -j 4
+cmake --install /tmp/caelestia-horizontal-build --prefix ~/.local/share/caelestia-horizontal
+./apply
+```
+
+The packaged shell remains available through `python scripts/desktop.py use-packaged`.

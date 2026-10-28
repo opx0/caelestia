@@ -40,7 +40,11 @@ local todo_app_tag = "todo_app"
 ----------------------
 
 -- Apply default opacity to all windows except fullscreen
-hl.window_rule({ match = { fullscreen = false }, opacity = vars.windowOpacity .. " override" })
+local runtime_dir = os.getenv("XDG_RUNTIME_DIR") or "/tmp"
+local opaque_mode = io.open(runtime_dir .. "/caelestia-opaque-mode", "r")
+local window_opacity = opaque_mode and 1 or vars.windowOpacity
+if opaque_mode then opaque_mode:close() end
+hl.window_rule({ match = { fullscreen = false }, opacity = window_opacity .. " override" })
 
 -- Center all floating windows except xwayland windows (xwayland popups count as windows)
 hl.window_rule({ match = { float = true, xwayland = false }, center = true })
@@ -61,7 +65,7 @@ hl.window_rule({
 
 -- Opaque apps
 tagged_rule(opaque_tag, {
-    "foot",                          -- Terminal
+    "kitty",                         -- Terminal
     "equibop",                       -- Discord client
     "org.quickshell",                -- Quickshell
     "feh|imv|swappy",                -- Image viewers

@@ -1,7 +1,10 @@
 local vars = require("variables")
+local home = os.getenv("HOME")
 
 -- Themes
 hl.env("QT_QPA_PLATFORMTHEME", "qtengine")
+hl.env("QT_PLUGIN_PATH", home .. "/.local/lib/qt6/plugins:" .. home .. "/.local/lib/qt5/plugins:/usr/lib/qt6/plugins")
+hl.env("LD_LIBRARY_PATH", home .. "/.local/lib:" .. (os.getenv("LD_LIBRARY_PATH") or ""))
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
 hl.env("XCURSOR_THEME", vars.cursorTheme)

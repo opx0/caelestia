@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(qtengine_plugin LANGUAGES CXX)
+
+include(GNUInstallDirs)
+
+set(QT6_MIN_VERSION 6.9)
+set(QT5_MIN_VERSION 5.15)
+set(KF5_MIN_VERSION "5.102.0")
+set(KF6_MIN_VERSION "6.20.0")
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_RPATH_USE_ORIGIN ON)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+option(BUILD_QT5 "Build with Qt5 support" ON)
+option(BUILD_QT6 "Build with Qt6 support" ON)
+
+find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+
+# nix workaround
+if (CMAKE_EXPORT_COMPILE_COMMANDS)
+	set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES})
+endif()
+
+if (BUILD_QT5)
+    add_subdirectory(src/qt5)
+endif()
+
+if (BUILD_QT6)
+    add_subdirectory(src/qt6)
+endif()

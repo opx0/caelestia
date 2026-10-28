@@ -1,12 +1,20 @@
 {
+    "appearance": {
+        "anim": {
+            "durations": {
+                "scale": 0.55
+            }
+        }
+    },
     "bar": {
+        "position": "top",
         "activeWindow": {
             "compact": true,
             "inverted": false,
             "showOnHover": true
         },
         "clock": {
-            "background": true,
+            "background": false,
             "showDate": true
         },
         "persistent": true,
@@ -45,7 +53,7 @@
             }
         ],
         "tray": {
-            "background": true,
+            "background": false,
             "compact": true,
             "recolour": true
         },
@@ -53,15 +61,52 @@
             "activeIndicator": true,
             "activeTrail": true,
             "occupiedBg": false,
-            "perMonitorWorkspaces": true,
-            "showWindows": true
-        }
+            "showWindows": true,
+            "perMonitor": true
+        },
+        "entries": [
+            {
+                "id": "logo",
+                "enabled": true
+            },
+            {
+                "id": "workspaces",
+                "enabled": true
+            },
+            {
+                "id": "activeWindow",
+                "enabled": true
+            },
+            {
+                "id": "spacer",
+                "enabled": true
+            },
+            {
+                "id": "clock",
+                "enabled": true
+            },
+            {
+                "id": "spacer",
+                "enabled": true
+            },
+            {
+                "id": "tray",
+                "enabled": true
+            },
+            {
+                "id": "statusIcons",
+                "enabled": true
+            },
+            {
+                "id": "power",
+                "enabled": true
+            }
+        ]
     },
     "general": {
         "apps": {
             "terminal": [
-                "/usr/bin/ghostty",
-                "--gtk-single-instance=true"
+                "kitty"
             ]
         }
     },
@@ -69,6 +114,6 @@
         "enabled": true
     },
     "border": {
-        "thickness": 4
+        "thickness": 2
     }
 }
