@@ -103,6 +103,11 @@ Item {
         }
 
         Popout {
+            name: "aiquota"
+            sourceComponent: AIQuota {}
+        }
+
+        Popout {
             name: "battery"
             sourceComponent: Battery {}
         }

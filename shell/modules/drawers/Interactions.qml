@@ -24,6 +24,25 @@ CustomMouseArea {
     property bool osdShortcutActive
     property bool utilitiesShortcutActive
 
+    Timer {
+        id: quotaCloseDelay
+        interval: 180
+        onTriggered: {
+            if (popouts.currentName === "aiquota" && !popouts.isDetached &&
+                (!root.containsMouse || (!root.inPopouts(root.mouseX, root.mouseY) && (!root.inBarEdge(root.mouseX, root.mouseY) || !bar.quotaIconHovered))))
+                popouts.hasCurrent = false;
+        }
+    }
+
+    function closeHoveredPopout(): void {
+        if (popouts.currentName === "aiquota" && popouts.hasCurrent) {
+            if (!quotaCloseDelay.running)
+                quotaCloseDelay.start();
+        }
+        else
+            popouts.hasCurrent = false;
+    }
+
     function withinPanelHeight(panel: Item, x: real, y: real): bool {
         const bounds = panel.visible ? panels.exposedRect(panel) : panels.panelGeometry(panel);
         return y >= bounds.y - Config.border.rounding && y <= bounds.y + bounds.height + Config.border.rounding;
@@ -139,7 +158,7 @@ CustomMouseArea {
                 screenState.utilities = false;
 
             if (!popouts.currentName.startsWith("traymenu") || ((popouts.current as StackView)?.depth ?? 0) <= 1) {
-                popouts.hasCurrent = false;
+                root.closeHoveredPopout();
                 bar.closeTray();
             }
 
@@ -313,6 +332,9 @@ CustomMouseArea {
         const inBar = inBarEdge(x, y);
         const inDashboard = inDashboardTrigger(x, y);
 
+        if (inPopouts(x, y))
+            quotaCloseDelay.stop();
+
         if (inDashboard && popouts.currentName === "activewindow")
             popouts.hasCurrent = false;
 
@@ -320,8 +342,12 @@ CustomMouseArea {
         // Bar's title span excludes this region, so it cannot reopen the preview.
         if (inBar && (!inDashboard || y >= Math.max(Config.border.minThickness, borderThickness))) {
             bar.checkPopout(BarPosition.isHorizontal(bar.position) ? x : y);
+            if (popouts.currentName === "aiquota" && popouts.hasCurrent && !bar.quotaIconHovered)
+                root.closeHoveredPopout();
+            else
+                quotaCloseDelay.stop();
         } else if (!inDashboard && (!popouts.currentName.startsWith("traymenu") || ((popouts.current as StackView)?.depth ?? 0) <= 1) && !inPopouts(x, y)) {
-            popouts.hasCurrent = false;
+            root.closeHoveredPopout();
             bar.closeTray();
         }
     }

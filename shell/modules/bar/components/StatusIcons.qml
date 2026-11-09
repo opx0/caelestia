@@ -66,7 +66,7 @@ StyledRect {
             model: ScriptModel {
                 id: model
 
-                values: root.Config.bar.statusIcons.values.filter(e => e.enabled)
+                values: root.Config.bar.statusIcons.values.filter(e => e.enabled).concat([{ id: "aiquota", enabled: true }])
             }
 
             DelegateChooser {
@@ -138,6 +138,15 @@ StyledRect {
                         BluetoothStatus {
                             colour: root.colour
                             isHorizontal: root.isHorizontal
+                        }
+                    }
+                }
+                DelegateChoice {
+                    roleValue: "aiquota"
+                    delegate: EntryWrapper {
+                        MaterialIcon {
+                            text: "smart_toy"
+                            color: root.colour
                         }
                     }
                 }

@@ -21,6 +21,7 @@ GridLayout {
     required property rect dashboardHitRect
     readonly property int axisPadding: Tokens.padding.large
     property int layoutRevision: 0
+    property bool quotaIconHovered: false
     readonly property int entryCount: repeater.count
     readonly property var enabledEntries: Config.bar.entries.values.filter(e => e.enabled)
 
@@ -96,13 +97,15 @@ GridLayout {
     }
 
     function checkPopout(along: real): void {
+        quotaIconHovered = false;
         const ch = childAt(isHorizontal ? along : width / 2, isHorizontal ? height / 2 : along) as EntryWrapper;
 
         if (ch?.entryId !== "tray")
             closeTray();
 
         if (!ch?.entryId) {
-            popouts.hasCurrent = false;
+            if (popouts.currentName !== "aiquota")
+                popouts.hasCurrent = false;
             return;
         }
 
@@ -113,10 +116,11 @@ GridLayout {
             const icon = items.childAt(isHorizontal ? mapToItem(items, along, 0).x : items.width / 2, isHorizontal ? items.height / 2 : mapToItem(items, 0, along).y);
 
             if (icon?.present) {
+                quotaIconHovered = icon.name === "aiquota";
                 popouts.currentName = icon.name;
                 popouts.currentCenter = Qt.binding(() => isHorizontal ? icon.mapToItem(root, icon.implicitWidth / 2, 0).x : icon.mapToItem(root, 0, icon.implicitHeight / 2).y);
                 popouts.hasCurrent = Config.bar.popouts.statusIcons;
-            } else {
+            } else if (popouts.currentName !== "aiquota") {
                 popouts.hasCurrent = false;
             }
         } else if (id === "tray") {
@@ -245,7 +249,7 @@ GridLayout {
             DelegateChoice {
                 roleValue: "clock"
                 delegate: EntryWrapper {
-                    Clock {
+                    Island {
                         objectName: "taskbarClock"
                         isHorizontal: root.isHorizontal
                     }

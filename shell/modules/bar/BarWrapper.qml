@@ -33,6 +33,7 @@ Item {
     readonly property bool shouldBeVisible: !fullscreen && !disabled && (Config.bar.persistent || screenState.bar || isHovered)
     property bool isHovered
     readonly property Item contentItem: (isHorizontal ? horizontalContent.item : verticalContent.item) as Item
+    readonly property bool quotaIconHovered: (contentItem as Bar)?.quotaIconHovered ?? false
 
     function closeTray(): void {
         (contentItem as Bar)?.closeTray();
@@ -50,7 +51,9 @@ Item {
         (contentItem as Bar)?.handleWheel(along, angleDelta);
     }
 
-    clip: true
+    // Let the active center island rise above the bar without growing the
+    // bar surface or its reserved screen edge.
+    clip: false
     visible: (isHorizontal ? height : width) > Config.border.thickness
 
     width: isHorizontal ? screen.width : implicitWidth
