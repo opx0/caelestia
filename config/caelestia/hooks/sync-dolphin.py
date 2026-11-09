@@ -324,6 +324,8 @@ def sync():
     parser_dst.set("General", "ColorScheme", scheme_name)
     parser_dst.set("General", "Name", "Catppuccin Mocha Lavender" if using_official_catppuccin else "Caelestia")
     parser_dst.set("General", "shadeSortColumn", "true")
+    parser_dst.set("General", "TerminalApplication", "ghostty")
+    parser_dst.set("General", "TerminalService", "com.mitchellh.ghostty.desktop")
 
     # Icon theme: prefer Colloid-Catppuccin-Dark, fallback to Papirus-Dark, then breeze-dark
     colloid_path = Path.home() / ".local/share/icons/Colloid-Catppuccin-Dark"
@@ -391,6 +393,10 @@ def sync():
     darkly_parser.set("Style", "NewDolphinSelectionStyle", "true")
     darkly_parser.set("Style", "NoOutline", "true")
     darkly_parser.set("Style", "SidePanelDrawFrame", "false")
+    darkly_parser.set("Style", "TabBarAltStyle", "false")
+    darkly_parser.set("Style", "TabBGColor", "17, 17, 27")
+    darkly_parser.set("Style", "TabDrawHighlight", "true")
+    darkly_parser.set("Style", "TabUseBrighterCloseIcon", "true")
     darkly_parser.set("Style", "ToolBarDrawItemSeparator", "false")
     darkly_parser.set("Style", "ToolBarDrawSeparator", "false")
     darkly_parser.set("Style", "ToolBarOpacity", "100")
