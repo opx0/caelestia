@@ -1,119 +1,118 @@
 {
-    "appearance": {
-        "anim": {
-            "durations": {
-                "scale": 0.55
-            }
-        }
-    },
-    "bar": {
-        "position": "top",
-        "activeWindow": {
-            "compact": true,
-            "inverted": false,
-            "showOnHover": true
-        },
-        "clock": {
-            "background": false,
-            "showDate": true
-        },
-        "persistent": true,
-        "popouts": {
-            "statusIcons": true
-        },
-        "showOnHover": true,
-        "statusIcons": [
-            {
-                "enabled": false,
-                "id": "lockStatus"
-            },
-            {
-                "enabled": false,
-                "id": "audio"
-            },
-            {
-                "enabled": true,
-                "id": "microphone"
-            },
-            {
-                "enabled": false,
-                "id": "kbLayout"
-            },
-            {
-                "enabled": true,
-                "id": "network"
-            },
-            {
-                "enabled": false,
-                "id": "bluetooth"
-            },
-            {
-                "enabled": true,
-                "id": "battery"
-            }
-        ],
-        "tray": {
-            "background": false,
-            "compact": true,
-            "recolour": true
-        },
-        "workspaces": {
-            "activeIndicator": true,
-            "activeTrail": true,
-            "occupiedBg": false,
-            "showWindows": true,
-            "perMonitor": true
-        },
-        "entries": [
-            {
-                "id": "logo",
-                "enabled": true
-            },
-            {
-                "id": "workspaces",
-                "enabled": true
-            },
-            {
-                "id": "activeWindow",
-                "enabled": true
-            },
-            {
-                "id": "spacer",
-                "enabled": true
-            },
-            {
-                "id": "clock",
-                "enabled": true
-            },
-            {
-                "id": "spacer",
-                "enabled": true
-            },
-            {
-                "id": "tray",
-                "enabled": true
-            },
-            {
-                "id": "statusIcons",
-                "enabled": true
-            },
-            {
-                "id": "power",
-                "enabled": true
-            }
-        ]
-    },
-    "general": {
-        "apps": {
-            "terminal": [
-                "kitty"
-            ]
-        }
-    },
-    "sidebar": {
-        "enabled": true
-    },
-    "border": {
-        "thickness": 2
+  "appearance": {
+    "anim": {
+      "durations": {
+        "scale": 0.55
+      }
     }
+  },
+  "bar": {
+    "position": "top",
+    "activeWindow": {
+      "compact": true,
+      "inverted": false,
+      "showOnHover": true
+    },
+    "clock": {
+      "background": false,
+      "showDate": true
+    },
+    "persistent": true,
+    "popouts": {
+      "statusIcons": true
+    },
+    "showOnHover": true,
+    "statusIcons": [
+      {
+        "enabled": false,
+        "id": "lockStatus"
+      },
+      {
+        "enabled": false,
+        "id": "audio"
+      },
+      {
+        "enabled": true,
+        "id": "microphone"
+      },
+      {
+        "enabled": false,
+        "id": "kbLayout"
+      },
+      {
+        "enabled": true,
+        "id": "network"
+      },
+      {
+        "enabled": false,
+        "id": "bluetooth"
+      },
+      {
+        "enabled": true,
+        "id": "battery"
+      }
+    ],
+    "tray": {
+      "background": false,
+      "compact": true,
+      "recolour": true
+    },
+    "workspaces": {
+      "activeIndicator": true,
+      "activeTrail": true,
+      "occupiedBg": false,
+      "showWindows": true,
+      "perMonitor": true
+    },
+    "entries": [
+      {
+        "id": "logo",
+        "enabled": true
+      },
+      {
+        "id": "workspaces",
+        "enabled": true
+      },
+      {
+        "id": "activeWindow",
+        "enabled": true
+      },
+      {
+        "id": "spacer",
+        "enabled": true
+      },
+      {
+        "id": "clock",
+        "enabled": true
+      },
+      {
+        "id": "spacer",
+        "enabled": true
+      },
+      {
+        "id": "tray",
+        "enabled": true
+      },
+      {
+        "id": "statusIcons",
+        "enabled": true
+      },
+      {
+        "id": "power",
+        "enabled": true
+      }
+    ]
+  },
+  "general": {
+    "apps": {
+      "terminal": ["kitty"]
+    }
+  },
+  "sidebar": {
+    "enabled": true
+  },
+  "border": {
+    "thickness": 0,
+    "rounding": 14
+  }
 }

@@ -1,8 +1,17 @@
+local scheme = require("scheme.current")
+
 return {
     workspaceSwipeFingers = 3,
-    windowGapsIn = 3,
-    windowGapsOut = 4,
-    singleWindowGapsOut = 4,
+
+    -- Compact tiling: gaps_in is applied on both sides of adjacent windows.
+    windowGapsIn = 1,
+    windowGapsOut = 1,
+    singleWindowGapsOut = 1,
+
+    -- Nest inside the shell's 25px curve (2px frame + 1px outer gap).
+    windowRounding = 14,
+    windowBorderSize = 2,
+    activeWindowBorderColour = "rgba(" .. scheme.primary .. "88)",
 
     -- Performance optimizations:
     -- Lighter blur (1 pass, smaller radius) reduces fillrate on 120Hz display
@@ -11,6 +20,6 @@ return {
     blurPopups = false,
 
     -- Lighter shadows
-    shadowRange = 8,
+    shadowRange = 6,
     shadowRenderPower = 2,
 }

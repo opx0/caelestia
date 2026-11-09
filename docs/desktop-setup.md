@@ -92,8 +92,13 @@ source and native modules first.
 ## Current local changes
 
 - Workspace swiping uses three fingers horizontally.
-- Window gaps are 3 pixels inside and 4 pixels outside, including a single window.
-- Shell frame thickness is 4 pixels.
+- Adjacent tiled windows have a 2-pixel gap (1 pixel per side), with 1-pixel
+  outer gaps, including a single window.
+- Windows use 14-pixel rounded corners, a 2-pixel focus border tinted from the
+  current scheme at 53% opacity, and soft 6-pixel shadows. Existing opacity and
+  blur settings are preserved.
+- The shell uses 14-pixel rounding with the outer frame disabled; window corners
+  nest inside the 1-pixel outer gap. The top bar remains visible.
 - Overrides remain in `config/caelestia/hypr-vars.lua` and `shell.json`.
 
 Deployment/restore behavior is covered by temporary-directory tests. The initial
@@ -122,3 +127,11 @@ cmake --install /tmp/caelestia-horizontal-build --prefix ~/.local/share/caelesti
 ```
 
 The packaged shell remains available through `python scripts/desktop.py use-packaged`.
+
+## HyprPM plugins
+
+Nexus → System → Plugins lists the plugins reported by `hyprpm list`. The
+toggles run `hyprpm enable`/`hyprpm disable` followed by `hyprpm reload`, and
+Refresh re-reads the state. The enabled count is also shown on the About page.
+Installing, removing, updating and configuring individual plugins are not part
+of this first version.
